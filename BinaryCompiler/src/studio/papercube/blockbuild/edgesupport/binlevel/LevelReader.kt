@@ -305,5 +305,5 @@ open class LevelReader(levelFile: File) {
     /**
      * 毛用没有。不标准的代码。只是为了防止未使用的警告。都怪KOTLIN这里要求太严格了。
      */
-    private inline fun supressUnusedWarnings(vararg any: Any) = 0
+    private inline fun supressUnusedWarnings(vararg any: Any) = any
 }
