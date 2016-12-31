@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/3DTraining/3DTraining.iml" filepath="$PROJECT_DIR$/3DTraining/3DTraining.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BinaryCompiler/BinaryCompiler.iml" filepath="$PROJECT_DIR$/BinaryCompiler/BinaryCompiler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BlockBuild.iml" filepath="$PROJECT_DIR$/BlockBuild.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BlockBuildApp/BlockBuildApp.iml" filepath="$PROJECT_DIR$/BlockBuildApp/BlockBuildApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestProductions/TestProductions.iml" filepath="$PROJECT_DIR$/TestProductions/TestProductions.iml" />
+    </modules>
+  </component>
+</project>
