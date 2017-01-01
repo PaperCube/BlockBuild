@@ -4,17 +4,20 @@ import studio.papercube.blockbuild.compatibility.BinaryWriter
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.OutputStream
 
 /**
  *[LevelWriter]自动修正关卡Z轴。关于详细的规则，参见[LevelReader]的文档
- * 
+ *
  * Created by imzhy on 2016/12/11.
  *
  * @see LevelReader
  */
 
-open class LevelWriter(val level: Level, target: File)  {
-    val w = BinaryWriter(BufferedOutputStream(FileOutputStream(target),32767))
+open class LevelWriter(val level: Level, outputStream: OutputStream) {
+    val w = BinaryWriter(BufferedOutputStream(outputStream))
+
+    constructor(level: Level, target: File) : this(level, BufferedOutputStream(FileOutputStream(target), 32767))
 
 
     fun write() {
@@ -210,8 +213,8 @@ open class LevelWriter(val level: Level, target: File)  {
         events.forEach { it.writeAsShort() }
     }
 
-    private fun OtherCube.writeStructure(){
-        fun OtherCube.KeyEvent.writeStructure(){
+    private fun OtherCube.writeStructure() {
+        fun OtherCube.KeyEvent.writeStructure() {
             timeOffset.writeAsShort()
             direction.writeAsByte()
             eventType.writeAsByte()
@@ -233,7 +236,7 @@ open class LevelWriter(val level: Level, target: File)  {
 
     }
 
-    private fun Resizer.writeStructure(){
+    private fun Resizer.writeStructure() {
         position.writeStructure()
         visible.writeAsBoolean()
         direction.writeAsByte()

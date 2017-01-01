@@ -1,10 +1,13 @@
 package studio.papercube.blockbuild.edgesupport.binlevel;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 代表一个关卡。具有关卡所有的基本属性。没有措施会保证所有值都是有效的，无效的值应该在输出时被忽略，或者导致错误。
  * Created by imzhy on 2016/12/3.
  */
 @SuppressWarnings({"unused"})
@@ -52,6 +55,7 @@ public class Level implements Cloneable,Serializable {
     byte musicJ2ME;
     byte music;
 
+    public Level(){}
 
     public List<Bumper> getBumpers() {
         return bumpers;
@@ -267,6 +271,20 @@ public class Level implements Cloneable,Serializable {
         }
     }
 
+    public byte[] toByteArray(){
+        ByteArrayOutputStream levelToByteArray = new ByteArrayOutputStream();
+        LevelWriter writer = new LevelWriter(this, levelToByteArray);
+        writer.write();
+
+        return levelToByteArray.toByteArray();
+    }
+
+    public static Level build(byte[] data) {
+        ByteArrayInputStream byteArrayToLevel = new ByteArrayInputStream(data);
+        LevelReader reader = new LevelReader(byteArrayToLevel);
+        return reader.read();
+    }
+
     public static class LegacyMinimap {
         private byte[] legacyMinimap;
 
@@ -367,7 +385,7 @@ public class Level implements Cloneable,Serializable {
 
         private void modifyBit(byte[] data, int index, int value) {
             byte originalByte = data[index / 8];
-            data[index / 8] = (byte) (originalByte | (1 << (7 - index % 8)));
+            data[index / 8] = (byte) (originalByte | (value << (7 - index % 8)));
         }
 
         public static class VectorOutOfSizeException extends IndexOutOfBoundsException {

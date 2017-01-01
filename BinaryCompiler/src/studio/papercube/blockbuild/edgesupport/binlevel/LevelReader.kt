@@ -4,6 +4,7 @@ import studio.papercube.blockbuild.compatibility.BinaryReader
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileInputStream
+import java.io.InputStream
 
 /**
  * 关于自动修正关卡Z轴：
@@ -31,13 +32,15 @@ import java.io.FileInputStream
  * @see LevelWriter
  */
 
-open class LevelReader(levelFile: File) {
+open class LevelReader(inputStream: InputStream) {
     private val r: BinaryReader
     private val level = Level()
 
     init {
-        r = BinaryReader(BufferedInputStream(FileInputStream(levelFile),32767))
+        r = BinaryReader(inputStream)
     }
+
+    constructor(levelFile: File) : this(BufferedInputStream(FileInputStream(levelFile), 32767))
 
 
     fun read(): Level {
