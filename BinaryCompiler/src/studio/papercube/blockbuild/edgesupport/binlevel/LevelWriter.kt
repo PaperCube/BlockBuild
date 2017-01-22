@@ -109,7 +109,7 @@ open class LevelWriter(val level: Level, outputStream: OutputStream) {
         titleLength.writeAsInt()
         title.writeFully()
 
-        for (i in 0 until 5) timeThresholds[i].writeAsShort()
+        for (i in 0..4) timeThresholds[i].writeAsShort()
 
         val prismCount = level.prisms.size.toShort()
         prismCount.writeAsShort()
