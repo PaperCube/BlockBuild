@@ -77,7 +77,7 @@ public class MSAAApp extends Application {
         hbox.setLayoutY(200);
 
         PhongMaterial phongMaterial = new PhongMaterial(Color.color(1.0, 0.7, 0.8));
-        Cylinder cylinder1 = new Cylinder(100, 1000);
+        Cylinder cylinder1 = new Cylinder(100, 200);
         cylinder1.setMaterial(phongMaterial);
         SubScene noMsaa = createSubScene("MSAA = false", cylinder1,
                 Color.TRANSPARENT,

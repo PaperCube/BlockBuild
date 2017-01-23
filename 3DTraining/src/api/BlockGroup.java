@@ -1,16 +1,10 @@
 package api;
 
 import javafx.collections.ObservableList;
-import javafx.scene.DepthTest;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.PerspectiveCamera;
+import javafx.scene.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.Cylinder;
-import javafx.scene.shape.Sphere;
-import javafx.scene.transform.Rotate;
 
 /**
  * Created by imzhy on 2017/1/22.
@@ -21,17 +15,15 @@ public class BlockGroup extends Group {
     final Xform world = new Xform();
     final PerspectiveCamera camera = new PerspectiveCamera(true);
     final Xform cameraXform = new Xform();
-    final Xform cameraXform2 = new Xform();
-    final Xform cameraXform3 = new Xform();
 
 
-    private static final double HYDROGEN_ANGLE = 104.5;
-    public static final double CAMERA_INITIAL_X_ANGLE = 70.0;
-    public static final double CAMERA_INITIAL_Y_ANGLE = 320.0;
+    public static final double CAMERA_INITIAL_X_ANGLE = -22.0;
+    public static final double CAMERA_INITIAL_Y_ANGLE = -196.0;
+    public static final double CAMERA_INITIAL_ZOOM = -54;
     public static final double CAMERA_NEAR_CLIP = 0.1;
     public static final double CAMERA_FAR_CLIP = 10000.0;
     public static final double AXIS_LENGTH = 250.0;
-    public static final double CAMERA_INITIAL_DISTANCE = -450;
+    public static final double DEFAULT_FIELD_OF_VIEW = 42.0;
 
 
     public BlockGroup() {
@@ -40,6 +32,12 @@ public class BlockGroup extends Group {
 //        buildMolecule();
         getChildren().add(world);
         setDepthTest(DepthTest.ENABLE);
+
+        camera.setFieldOfView(DEFAULT_FIELD_OF_VIEW);
+        setAngleRotateX(CAMERA_INITIAL_X_ANGLE);
+        setAngleRotateY(CAMERA_INITIAL_Y_ANGLE);
+        setZoom(CAMERA_INITIAL_ZOOM);
+
     }
 
     //   void buildScene() {
@@ -48,14 +46,12 @@ public class BlockGroup extends Group {
     void buildCamera() {
         System.out.println("buildCamera()");
         getChildren().add(cameraXform);
-        cameraXform.getChildren().add(cameraXform2);
-        cameraXform2.getChildren().add(cameraXform3);
-        cameraXform3.getChildren().add(camera);
-        cameraXform3.setRotateZ(180.0);
+        cameraXform.getChildren().add(camera);
+        cameraXform.setRotateZ(180);
 
         camera.setNearClip(CAMERA_NEAR_CLIP);
         camera.setFarClip(CAMERA_FAR_CLIP);
-        camera.setTranslateZ(CAMERA_INITIAL_DISTANCE);
+        camera.setTranslateZ(CAMERA_INITIAL_ZOOM);
         cameraXform.ry.setAngle(CAMERA_INITIAL_Y_ANGLE);
         cameraXform.rx.setAngle(CAMERA_INITIAL_X_ANGLE);
     }
@@ -88,101 +84,10 @@ public class BlockGroup extends Group {
     }
 
 
-    void buildMolecule() {
-        //======================================================================
-        // THIS IS THE IMPORTANT MATERIAL FOR THE TUTORIAL
-        //======================================================================
-
-        final PhongMaterial redMaterial = new PhongMaterial();
-        redMaterial.setDiffuseColor(Color.DARKRED);
-        redMaterial.setSpecularColor(Color.RED);
-
-        final PhongMaterial whiteMaterial = new PhongMaterial();
-        whiteMaterial.setDiffuseColor(Color.WHITE);
-        whiteMaterial.setSpecularColor(Color.LIGHTBLUE);
-
-        final PhongMaterial greyMaterial = new PhongMaterial();
-        greyMaterial.setDiffuseColor(Color.DARKGREY);
-        greyMaterial.setSpecularColor(Color.GREY);
-
-        // Molecule Hierarchy
-        // [*] moleculeXform
-        //     [*] oxygenXform
-        //         [*] oxygenSphere
-        //     [*] hydrogen1SideXform
-        //         [*] hydrogen1Xform
-        //             [*] hydrogen1Sphere
-        //         [*] bond1Cylinder
-        //     [*] hydrogen2SideXform
-        //         [*] hydrogen2Xform
-        //             [*] hydrogen2Sphere
-        //         [*] bond2Cylinder
-        Xform moleculeXform = new Xform();
-        Xform oxygenXform = new Xform();
-        Xform hydrogen1SideXform = new Xform();
-        Xform hydrogen1Xform = new Xform();
-        Xform hydrogen2SideXform = new Xform();
-        Xform hydrogen2Xform = new Xform();
-
-        Sphere oxygenSphere = new Sphere(40.0);
-        oxygenSphere.setMaterial(redMaterial);
-
-        Sphere hydrogen1Sphere = new Sphere(30.0);
-        hydrogen1Sphere.setMaterial(whiteMaterial);
-        hydrogen1Sphere.setTranslateX(0.0);
-
-        Sphere hydrogen2Sphere = new Sphere(30.0);
-        hydrogen2Sphere.setMaterial(whiteMaterial);
-        hydrogen2Sphere.setTranslateZ(0.0);
-
-        Cylinder bond1Cylinder = new Cylinder(5, 100);
-        bond1Cylinder.setMaterial(greyMaterial);
-        bond1Cylinder.setTranslateX(50.0);
-        bond1Cylinder.setRotationAxis(Rotate.Z_AXIS);
-        bond1Cylinder.setRotate(90.0);
-
-        Cylinder bond2Cylinder = new Cylinder(5, 100);
-        bond2Cylinder.setMaterial(greyMaterial);
-        bond2Cylinder.setTranslateX(50.0);
-        bond2Cylinder.setRotationAxis(Rotate.Z_AXIS);
-        bond2Cylinder.setRotate(90.0);
-
-        moleculeXform.getChildren().add(oxygenXform);
-        moleculeXform.getChildren().add(hydrogen1SideXform);
-        moleculeXform.getChildren().add(hydrogen2SideXform);
-        oxygenXform.getChildren().add(oxygenSphere);
-        hydrogen1SideXform.getChildren().add(hydrogen1Xform);
-        hydrogen2SideXform.getChildren().add(hydrogen2Xform);
-        hydrogen1Xform.getChildren().add(hydrogen1Sphere);
-        hydrogen2Xform.getChildren().add(hydrogen2Sphere);
-        hydrogen1SideXform.getChildren().add(bond1Cylinder);
-        hydrogen2SideXform.getChildren().add(bond2Cylinder);
-
-        hydrogen1Xform.setTx(100.0);
-        hydrogen2Xform.setTx(100.0);
-        hydrogen2SideXform.setRotateY(HYDROGEN_ANGLE);
-
-        objectGroup.getChildren().add(moleculeXform);
-
-        world.getChildren().addAll(objectGroup);
-    }
-
-
     public PerspectiveCamera getCamera() {
         return camera;
     }
 
-    public Xform getCameraXform() {
-        return cameraXform;
-    }
-
-    public Xform getCameraXform2() {
-        return cameraXform2;
-    }
-
-    public Xform getCameraXform3() {
-        return cameraXform3;
-    }
 
     public Xform getAxisGroup() {
         return axisGroup;
@@ -209,27 +114,27 @@ public class BlockGroup extends Group {
     }
 
     public void setPositionTranslateX(double value) {
-        cameraXform2.t.setX(value);
+        cameraXform.t.setX(value);
     }
 
     public double getPositionTranslateX() {
-        return cameraXform2.t.getX();
+        return cameraXform.t.getX();
     }
 
     public void setPositionTranslateY(double value) {
-        cameraXform2.t.setY(value);
+        cameraXform.t.setY(value);
     }
 
     public double getPositionTranslateY() {
-        return cameraXform2.t.getY();
+        return cameraXform.t.getY();
     }
 
-    public void setPositionTranslzteZ(double value) {
-        cameraXform2.t.setZ(value);
+    public void setPositionTranslateZ(double value) {
+        cameraXform.t.setZ(value);
     }
 
-    public double getPositionTranslzteZ() {
-        return cameraXform2.t.getZ();
+    public double getPositionTranslateZ() {
+        return cameraXform.t.getZ();
     }
 
     public void setZoom(double value) {

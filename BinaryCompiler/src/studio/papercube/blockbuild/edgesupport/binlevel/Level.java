@@ -357,6 +357,10 @@ public class Level implements Cloneable,Serializable {
             return vectorList.removeIf(vec -> vec.equals(vector));
         }
 
+        public List<Vector> duplicateVectors(){
+            return new ArrayList<>(vectorList);
+        }
+
         public byte[] toByteArray(short sizeX, short sizeY, short sizeZ) {
             int bytesEveryLayer = (sizeX * sizeY + 7) / 8;
             byte[] data = new byte[sizeZ * bytesEveryLayer];

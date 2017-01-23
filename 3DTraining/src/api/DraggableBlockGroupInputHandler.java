@@ -30,7 +30,7 @@ public class DraggableBlockGroupInputHandler {
         this.blockGroup = blockGroup;
     }
 
-    void handleMouse() {
+    public void handleMouse() {
         scene.setOnMousePressed(me -> {
             mousePosX = me.getSceneX();
             mousePosY = me.getSceneY();
@@ -54,26 +54,26 @@ public class DraggableBlockGroupInputHandler {
                 modifier = SHIFT_MULTIPLIER;
             }
             if (me.isPrimaryButtonDown()) {
-                blockGroup.setAngleRotateY(blockGroup.getAngleRotateY() - mouseDeltaX * MOUSE_SPEED * modifier * ROTATION_SPEED);
-                blockGroup.setAngleRotateX(blockGroup.getAngleRotateX() + mouseDeltaY * MOUSE_SPEED * modifier * ROTATION_SPEED);
-            } else if (me.isSecondaryButtonDown()) {
+                blockGroup.setAngleRotateY(blockGroup.getAngleRotateY() + mouseDeltaX * MOUSE_SPEED * modifier * ROTATION_SPEED);
+                blockGroup.setAngleRotateX(blockGroup.getAngleRotateX() - mouseDeltaY * MOUSE_SPEED * modifier * ROTATION_SPEED);
+            } else if (me.isMiddleButtonDown()) {
                 double z = blockGroup.getCamera().getTranslateZ();
                 double newZ = z + mouseDeltaX * MOUSE_SPEED * modifier;
                 blockGroup.setZoom(newZ);
-            } else if (me.isMiddleButtonDown()) {
-                blockGroup.setPositionTranslateX(blockGroup.getPositionTranslateX() + mouseDeltaX * MOUSE_SPEED * modifier * TRACK_SPEED);
-                blockGroup.setPositionTranslateY(blockGroup.getPositionTranslateY() + mouseDeltaY * MOUSE_SPEED * modifier * TRACK_SPEED);
+            } else if (me.isSecondaryButtonDown()) {
+                blockGroup.setPositionTranslateX(blockGroup.getPositionTranslateX() - mouseDeltaX * MOUSE_SPEED * modifier * TRACK_SPEED);
+                blockGroup.setPositionTranslateZ(blockGroup.getPositionTranslateZ() - mouseDeltaY * MOUSE_SPEED * modifier * TRACK_SPEED);
             }
         });
     }
 
-    void handleKeyboard() {
+    public void handleKeyboard() {
         scene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case Z:
                     blockGroup.setPositionTranslateX(0.0);
                     blockGroup.setPositionTranslateY(0.0);
-                    blockGroup.setZoom(CAMERA_INITIAL_DISTANCE);
+                    blockGroup.setZoom(CAMERA_INITIAL_ZOOM);
                     blockGroup.setAngleRotateY(CAMERA_INITIAL_Y_ANGLE);
                     blockGroup.setAngleRotateX(CAMERA_INITIAL_X_ANGLE);
                     break;
@@ -83,7 +83,21 @@ public class DraggableBlockGroupInputHandler {
                 case V:
                     blockGroup.getObjectGroup().setVisible(!blockGroup.getObjectGroup().isVisible());
                     break;
+                case P:
+                    String value = String.format("AngleRotateX=%s,AngleRotateY=%s,CameraTranslateZ=%s,%n" +
+                                    "CameraZoom=%s,PositionTranslateX=%s,PositionTranslateY=%s,%n" +
+                                    "PositionTranslateZ=%s",
+                            blockGroup.getAngleRotateX(), blockGroup.getAngleRotateY(), blockGroup.camera.getTranslateZ(),
+                            blockGroup.getZoom(), blockGroup.getPositionTranslateX(), blockGroup.getPositionTranslateY(),
+                            blockGroup.getPositionTranslateZ());
+                    System.out.println(value);
+                    break;
             }
         });
+    }
+
+    public void handleAll(){
+        handleMouse();
+        handleKeyboard();
     }
 }

@@ -33,16 +33,25 @@
 package api;
 
 import javafx.application.Application;
-import javafx.scene.DepthTest;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Box;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import studio.papercube.blockbuild.edgesupport.binlevel.Level;
+import studio.papercube.blockbuild.edgesupport.binlevel.LevelReader;
+import studio.papercube.blockbuild.edgesupport.binlevel.Vector;
+
+import java.io.File;
 
 /**
- * @author cmcastil
+ * @author cmcastil, PaperCube
  */
-public class MoleculeSampleApp extends Application {
+public class EdgeModelSampleApp extends Application {
 
     BlockGroup root = new BlockGroup();
     DraggableBlockGroupInputHandler inputHandler;
@@ -55,20 +64,71 @@ public class MoleculeSampleApp extends Application {
 
 //        root.getChildren().add(world);
         root.getAxisGroup().setVisible(true);
-        root.setZoom(-20);
+//        root.setZoom(-20);
 
         Scene scene = new Scene(root, 1366, 768, true, SceneAntialiasing.BALANCED);
-        scene.setFill(Color.GREY);
+        scene.setFill(new Color(69/255.0,90/255.0,100/255.0,1));
 
         inputHandler = new DraggableBlockGroupInputHandler(scene, root);
         inputHandler.handleKeyboard();
         inputHandler.handleMouse();
 
-        primaryStage.setTitle("Molecule Sample Application");
+        test();
+
+        primaryStage.setTitle("Edge Model Sample Application");
         primaryStage.setScene(scene);
         primaryStage.show();
 
         scene.setCamera(root.getCamera());
+    }
+
+    public void test() {
+        try {
+            //"E:\\Applications\\Entertainment\\EdgeTest\\levels\\level309_winter.bin"
+            String path = getParameters().getRaw().size() > 0 ? getParameters().getRaw().get(0) : new FileChooser().showOpenDialog(null).getAbsolutePath();
+            Level level = new LevelReader(new File(path)).read();
+            System.out.println(level.getHeader().titleToString());
+            ObservableList<Node> children = root.getWorldChildren();
+
+            PhongMaterial red = singleColorMaterial(Color.RED);
+            PhongMaterial blue = singleColorMaterial(Color.LIMEGREEN);
+
+
+            level.getCollisionMap().duplicateVectors().forEach(vector -> children.add(vectorToBox(vector)));
+
+            Box spawn = vectorToBox(level.getSpawnPoint());
+            spawn.setMaterial(red);
+
+            Box end = vectorToBox(level.getExitPoint());
+            end.setMaterial(blue);
+
+//            LightBase light = new PointLight();
+//
+//            light.setTranslateX(-level.getSpawnPoint().getX());
+//            light.setTranslateY(-level.getSpawnPoint().getY());
+//            light.setTranslateZ(-level.getSpawnPoint().getZ());
+
+            children.addAll(spawn, end);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+    }
+
+    public Box vectorToBox(Vector vector) {
+        Box box = new Box(1, 1, 1);
+        box.setTranslateX(vector.getX());
+        box.setTranslateZ(vector.getY());
+        box.setTranslateY(vector.getZ());
+//        box.setEffect(new Lighting(new Light.Distant(0,0,Color.WHITE)));
+
+        return box;
+    }
+
+    public PhongMaterial singleColorMaterial(Color color) {
+        PhongMaterial material = new PhongMaterial();
+        material.setDiffuseColor(color);
+        material.setSpecularColor(color);
+        return material;
     }
 
     /**
