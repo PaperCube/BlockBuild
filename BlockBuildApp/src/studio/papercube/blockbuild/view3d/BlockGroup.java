@@ -1,7 +1,10 @@
-package api;
+package studio.papercube.blockbuild.view3d;
 
 import javafx.collections.ObservableList;
-import javafx.scene.*;
+import javafx.scene.DepthTest;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -33,17 +36,14 @@ public class BlockGroup extends Group {
         getChildren().add(world);
         setDepthTest(DepthTest.ENABLE);
 
-        camera.setFieldOfView(DEFAULT_FIELD_OF_VIEW);
-        setAngleRotateX(CAMERA_INITIAL_X_ANGLE);
-        setAngleRotateY(CAMERA_INITIAL_Y_ANGLE);
-        setZoom(CAMERA_INITIAL_ZOOM);
+        resetView();
 
     }
 
     //   void buildScene() {
     //       getChildren().add(world);
     //   }
-    void buildCamera() {
+    private void buildCamera() {
         System.out.println("buildCamera()");
         getChildren().add(cameraXform);
         cameraXform.getChildren().add(camera);
@@ -56,7 +56,7 @@ public class BlockGroup extends Group {
         cameraXform.rx.setAngle(CAMERA_INITIAL_X_ANGLE);
     }
 
-    void buildAxes() {
+    private void buildAxes() {
         System.out.println("buildAxes()");
         final PhongMaterial redMaterial = new PhongMaterial();
         redMaterial.setDiffuseColor(Color.DARKRED);
@@ -83,11 +83,17 @@ public class BlockGroup extends Group {
         world.getChildren().addAll(axisGroup);
     }
 
+    public void resetView() {
+        camera.setFieldOfView(DEFAULT_FIELD_OF_VIEW);
+        setAngleRotateX(CAMERA_INITIAL_X_ANGLE);
+        setAngleRotateY(CAMERA_INITIAL_Y_ANGLE);
+        setZoom(CAMERA_INITIAL_ZOOM);
+    }
+
 
     public PerspectiveCamera getCamera() {
         return camera;
     }
-
 
     public Xform getAxisGroup() {
         return axisGroup;
@@ -144,10 +150,11 @@ public class BlockGroup extends Group {
     public double getZoom() {
         return camera.getTranslateZ();
     }
-    
-    
+
 
     public ObservableList<Node> getWorldChildren() {
         return world.getChildren();
     }
+
+
 }

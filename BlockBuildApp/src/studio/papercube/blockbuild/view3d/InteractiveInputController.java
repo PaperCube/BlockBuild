@@ -1,13 +1,13 @@
-package api;
+package studio.papercube.blockbuild.view3d;
 
 import javafx.scene.Scene;
 
-import static api.BlockGroup.*;
+import static studio.papercube.blockbuild.view3d.BlockGroup.*;
 
 /**
  * Created by imzhy on 2017/1/22.
  */
-public class DraggableBlockGroupInputHandler {
+public class InteractiveInputController {
     final Scene scene;
     final BlockGroup blockGroup;
 
@@ -25,7 +25,7 @@ public class DraggableBlockGroupInputHandler {
     double mouseDeltaX;
     double mouseDeltaY;
 
-    public DraggableBlockGroupInputHandler(Scene scene, BlockGroup blockGroup) {
+    public InteractiveInputController(Scene scene, BlockGroup blockGroup) {
         this.scene = scene;
         this.blockGroup = blockGroup;
     }
@@ -113,6 +113,8 @@ public class DraggableBlockGroupInputHandler {
                 case DOWN:
                     blockGroup.setCameraTranslateZ(blockGroup.getCameraTranslateZ() + (event.isShiftDown() ? 10 : 1));
                     break;
+
+
             }
         });
     }

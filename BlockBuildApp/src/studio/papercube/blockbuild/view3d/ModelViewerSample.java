@@ -30,32 +30,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package api;
+package studio.papercube.blockbuild.view3d;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import studio.papercube.blockbuild.edgesupport.binlevel.Level;
 import studio.papercube.blockbuild.edgesupport.binlevel.LevelReader;
-import studio.papercube.blockbuild.edgesupport.binlevel.Vector;
+import studio.papercube.blockbuild.view3d.renderableelements.*;
 
 import java.io.File;
 
 /**
  * @author cmcastil, PaperCube
  */
-public class EdgeModelSampleApp extends Application {
+public class ModelViewerSample extends Application {
 
-    BlockGroup root = new BlockGroup();
-    DraggableBlockGroupInputHandler inputHandler;
+    BlockGroup rootBlockGroup = new BlockGroup();
+    InteractiveInputController inputHandler;
 
     @Override
     public void start(Stage primaryStage) {
@@ -63,78 +63,63 @@ public class EdgeModelSampleApp extends Application {
         // setUserAgentStylesheet(STYLESHEET_MODENA);
         System.out.println("start()");
 
-//        root.getChildren().add(world);
-        root.getAxisGroup().setVisible(true);
-//        root.setZoom(-20);
+//        rootBlockGroup.getChildren().add(world);
+        rootBlockGroup.getAxisGroup().setVisible(true);
+//        rootBlockGroup.setZoom(-20);
 
-        Scene scene = new Scene(root, 1366, 768, true, SceneAntialiasing.BALANCED);
+        Scene scene = new Scene(rootBlockGroup, 1366, 768, true, SceneAntialiasing.BALANCED);
         scene.setFill(new Color(69 / 255.0, 90 / 255.0, 100 / 255.0, 1));
 
-        inputHandler = new DraggableBlockGroupInputHandler(scene, root);
+        inputHandler = new InteractiveInputController(scene, rootBlockGroup);
         inputHandler.handleKeyboard();
         inputHandler.handleMouse();
 
-        test();
 
         primaryStage.setTitle("Edge Model Sample Application");
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        scene.setCamera(root.getCamera());
+        scene.setCamera(rootBlockGroup.getCamera());
+        loadLevelMap();
     }
 
-    public void test() {
+    private void loadLevelMap() {
         try {
             //"E:\\Applications\\Entertainment\\EdgeTest\\levels\\level309_winter.bin"
             String path = getParameters().getRaw().size() > 0 ? getParameters().getRaw().get(0) : new FileChooser().showOpenDialog(null).getAbsolutePath();
             Level level = new LevelReader(new File(path)).read();
-            System.out.println(level.getHeader().titleToString());
-            ObservableList<Node> children = root.getWorldChildren();
+            load(level);
 
-            PhongMaterial red = singleColorMaterial(Color.RED);
-            PhongMaterial blue = singleColorMaterial(Color.LIMEGREEN);
-            PhongMaterial lightBlack = singleColorMaterial(Color.rgb(30,30,30));
-
-
-            level.getCollisionMap().duplicateVectors().forEach(vector -> children.add(vectorToBox(vector)));
-            level.getMovingPlatforms().forEach(movingPlatform -> children.add(vectorToBox(movingPlatform.getWaypoints().get(0).getPosition(), lightBlack)));
-
-            Box spawn = vectorToBox(level.getSpawnPoint());
-            spawn.setMaterial(red);
-
-            Box end = vectorToBox(level.getExitPoint());
-            end.setMaterial(blue);
-
-
-            children.addAll(spawn, end);
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
     }
 
-    private Box vectorToBox(Vector vector) {
-        Box box = new Box(1, 1, 1);
-        box.setTranslateX(vector.getX());
-        box.setTranslateZ(vector.getY());
-        box.setTranslateY(vector.getZ());
-//        box.setEffect(new Lighting(new Light.Distant(0,0,Color.WHITE)));
+    private void load(Level level) {
+        System.out.println(level.getHeader().titleToString());
+        Group group = new Group();
+        ObservableList<Node> children = group.getChildren();
+        
+        PhongMaterial red = new PhongMaterial(Color.RED);
+        PhongMaterial blue = new PhongMaterial(Color.LIMEGREEN);
+        PhongMaterial lightBlack = new PhongMaterial(Color.rgb(30, 30, 30));
 
-        return box;
+
+        level.getCollisionMap().duplicateVectors().forEach(vector -> children.add(new RenderableStaticBlock(vector).toNode()));
+        level.getMovingPlatforms().forEach(movingPlatform -> children.add(new LastWaypointRenderedMovingPlatform(movingPlatform).toNode()));
+        level.getFallingPlatforms().forEach(fallingPlatform -> children.add(new RenderableFallingPlatform(fallingPlatform).toNode()));
+        level.getPrisms().forEach(prism -> children.add(new RenderablePrism(prism).toNode()));
+        Box spawn = new VectorBox(level.getSpawnPoint());
+        spawn.setMaterial(red);
+
+        Box end = new VectorBox(level.getExitPoint());
+        end.setMaterial(blue);
+
+        children.addAll(spawn, end);
+
+        rootBlockGroup.getChildren().add(group);
     }
 
-    private Box vectorToBox(Vector vector, Material material) {
-        Box box = vectorToBox(vector);
-        box.setMaterial(material);
-        return box;
-
-    }
-
-    public PhongMaterial singleColorMaterial(Color color) {
-        PhongMaterial material = new PhongMaterial();
-        material.setDiffuseColor(color);
-        material.setSpecularColor(color);
-        return material;
-    }
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
