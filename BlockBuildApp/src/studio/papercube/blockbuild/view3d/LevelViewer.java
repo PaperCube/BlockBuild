@@ -33,28 +33,22 @@
 package studio.papercube.blockbuild.view3d;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Box;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import studio.papercube.blockbuild.edgesupport.binlevel.Level;
 import studio.papercube.blockbuild.edgesupport.binlevel.LevelReader;
-import studio.papercube.blockbuild.view3d.renderableelements.*;
 
 import java.io.File;
 
 /**
  * @author cmcastil, PaperCube
  */
-public class LevelViewerSample extends Application {
+public class LevelViewer extends Application {
 
-    BlockGroup rootBlockGroup = new BlockGroup();
+    LevelView levelView = new LevelView();
     InteractiveInputController inputHandler;
 
     @Override
@@ -63,14 +57,14 @@ public class LevelViewerSample extends Application {
         // setUserAgentStylesheet(STYLESHEET_MODENA);
         System.out.println("start()");
 
-//        rootBlockGroup.getChildren().add(world);
-        rootBlockGroup.getAxisGroup().setVisible(true);
-//        rootBlockGroup.setZoom(-20);
+//        levelView.getChildren().add(world);
+        levelView.getAxisGroup().setVisible(true);
+//        levelView.setZoom(-20);
 
-        Scene scene = new Scene(rootBlockGroup, 1366, 768, true, SceneAntialiasing.BALANCED);
+        Scene scene = new Scene(levelView, 1366, 768, true, SceneAntialiasing.BALANCED);
         scene.setFill(new Color(69 / 255.0, 90 / 255.0, 100 / 255.0, 1));
 
-        inputHandler = new InteractiveInputController(scene, rootBlockGroup);
+        inputHandler = new InteractiveInputController(scene, levelView);
         inputHandler.handleKeyboard();
         inputHandler.handleMouse();
 
@@ -79,7 +73,7 @@ public class LevelViewerSample extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        scene.setCamera(rootBlockGroup.getCamera());
+        scene.setCamera(levelView.getCamera());
         loadLevelMap();
     }
 
@@ -97,27 +91,7 @@ public class LevelViewerSample extends Application {
 
     private void load(Level level) {
         System.out.println(level.getHeader().titleToString());
-        Group group = new Group();
-        ObservableList<Node> children = group.getChildren();
-        
-        PhongMaterial red = new PhongMaterial(Color.RED);
-        PhongMaterial blue = new PhongMaterial(Color.LIMEGREEN);
-        PhongMaterial lightBlack = new PhongMaterial(Color.rgb(30, 30, 30));
-
-
-        level.getCollisionMap().duplicateVectors().forEach(vector -> children.add(new RenderableStaticBlock(vector).toNode()));
-        level.getMovingPlatforms().forEach(movingPlatform -> children.add(new LastWaypointRenderedMovingPlatform(movingPlatform).toNode()));
-        level.getFallingPlatforms().forEach(fallingPlatform -> children.add(new RenderableFallingPlatform(fallingPlatform).toNode()));
-        level.getPrisms().forEach(prism -> children.add(new RenderablePrism(prism).toNode()));
-        Box spawn = new VectorBox(level.getSpawnPoint());
-        spawn.setMaterial(red);
-
-        Box end = new VectorBox(level.getExitPoint());
-        end.setMaterial(blue);
-
-        children.addAll(spawn, end);
-
-        rootBlockGroup.getChildren().add(group);
+        levelView.setLevel(level);
     }
 
 

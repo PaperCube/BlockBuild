@@ -6,10 +6,7 @@ import javafx.scene.paint.Color
 import javafx.scene.paint.Material
 import javafx.scene.paint.PhongMaterial
 import javafx.scene.shape.Box
-import studio.papercube.blockbuild.edgesupport.binlevel.FallingPlatform
-import studio.papercube.blockbuild.edgesupport.binlevel.MovingPlatform
-import studio.papercube.blockbuild.edgesupport.binlevel.Prism
-import studio.papercube.blockbuild.edgesupport.binlevel.Vector
+import studio.papercube.blockbuild.edgesupport.binlevel.*
 
 /**
  * Created by PaperCube on 2017/1/28.
@@ -67,6 +64,12 @@ class RenderableFallingPlatform(val fallingPlatform: FallingPlatform) : Renderab
             material = PhongMaterial(Color.WHITE)
             return this
         }
+    }
+}
+
+class RenderableBumper(val bumper:Bumper) :RenderableElement(){
+    override fun toNode(): Node {
+        return bumper.position.toBox()
     }
 }
 

@@ -43,6 +43,7 @@ open class LevelReader(inputStream: InputStream) {
     constructor(levelFile: File) : this(BufferedInputStream(FileInputStream(levelFile), 32767))
 
 
+    @Suppress("UNUSED_VARIABLE")
     fun read(): Level {
 
         with(level) {
@@ -105,8 +106,6 @@ open class LevelReader(inputStream: InputStream) {
             musicJ2ME = r.readByte()
             music = r.readByte()
 
-            //不标准的代码。只是为了防止未使用的警告。都怪KOTLIN这里要求太严格了。
-            supressUnusedWarnings(unknownShort1, unknownShort2, unknownByte1, unknownShort5, unknownShort6, fansCount, miniBlocksCount)
         }
         r.close()
 
@@ -305,8 +304,4 @@ open class LevelReader(inputStream: InputStream) {
 
     private inline fun <reified T> mutableList(length: Int, noinline init: (Int) -> T) = Array(length, init).toMutableList()
 
-    /**
-     * 毛用没有。不标准的代码。只是为了防止未使用的警告。都怪KOTLIN这里要求太严格了。
-     */
-    private inline fun supressUnusedWarnings(vararg any: Any) = any
 }
