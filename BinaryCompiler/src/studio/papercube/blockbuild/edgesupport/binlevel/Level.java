@@ -349,8 +349,7 @@ public class Level implements Cloneable,Serializable {
         }
 
         public boolean addVector(Vector vector) {
-            if (vectorList.contains(vector)) return false;
-            else return vectorList.add(vector);
+            return !vectorList.contains(vector) && vectorList.add(vector);
         }
 
         public boolean removeVector(Vector vector) {

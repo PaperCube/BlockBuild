@@ -110,7 +110,7 @@ open class LevelReader(inputStream: InputStream) {
         }
         r.close()
 
-        return level;
+        return level
     }
 
     private inline fun <reified T> readStructure(noinline read: () -> T) = mutableList(r.readShort().toInt()) { read() }

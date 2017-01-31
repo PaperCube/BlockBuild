@@ -52,7 +52,7 @@ import java.io.File;
 /**
  * @author cmcastil, PaperCube
  */
-public class ModelViewerSample extends Application {
+public class LevelViewerSample extends Application {
 
     BlockGroup rootBlockGroup = new BlockGroup();
     InteractiveInputController inputHandler;

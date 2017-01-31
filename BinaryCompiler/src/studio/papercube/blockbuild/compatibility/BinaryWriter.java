@@ -23,7 +23,7 @@ public class BinaryWriter implements DataOutput{
         out.write(b);
     }
 
-    public void write(byte[] b, int off, int len) throws IOException {
+    public void write(@NotNull byte[] b, int off, int len) throws IOException {
         out.write(b, off, len);
     }
 
@@ -77,15 +77,15 @@ public class BinaryWriter implements DataOutput{
         writeLong(Double.doubleToLongBits(v));
     }
 
-    public void writeBytes(String s) throws IOException {
+    public void writeBytes(@NotNull String s) throws IOException {
         out.writeBytes(s);
     }
 
-    public void writeChars(String s) throws IOException {
+    public void writeChars(@NotNull String s) throws IOException {
         out.writeChars(s);
     }
 
-    public void writeUTF(String str) throws IOException {
+    public void writeUTF(@NotNull String str) throws IOException {
         out.writeUTF(str);
     }
 

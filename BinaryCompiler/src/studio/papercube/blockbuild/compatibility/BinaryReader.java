@@ -151,6 +151,7 @@ public class BinaryReader implements DataInput {
         return dataInputStream.readLine();
     }
 
+    @NotNull
     @Override
     public String readUTF() throws IOException {
         return dataInputStream.readUTF();

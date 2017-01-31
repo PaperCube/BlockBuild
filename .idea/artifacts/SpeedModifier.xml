@@ -10,7 +10,6 @@
         <element id="file-copy" path="$PROJECT_DIR$/TemporaryManifests/META-INF/MANIFEST.MF" />
       </element>
       <element id="extracted-dir" path="$KOTLIN_BUNDLED$/lib/kotlin-runtime.jar" path-in-jar="/" />
-      <element id="module-output" name="TestProductions" />
     </root>
   </artifact>
 </component>

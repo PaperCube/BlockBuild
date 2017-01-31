@@ -42,7 +42,6 @@ import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
 import java.util.function.Supplier;
 
 /**

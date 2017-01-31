@@ -1,7 +1,5 @@
 package studio.papercube.blockbuild.edgesupport.binlevel;
 
-import org.jetbrains.annotations.Nullable;
-
 /**
  * Created by imzhy on 2017/1/1.
  */

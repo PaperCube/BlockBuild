@@ -59,16 +59,12 @@ public class LevelModifications {
                             }
                         });
 
-                        level.getMovingPlatforms().forEach(movingPlatform -> {
-                            movingPlatform.getWaypoints().forEach(waypoint -> {
-                                waypoint.setPauseTime((short) multipleInt(waypoint.getPauseTime()));
-                                waypoint.setTravelTime((short) multipleInt(waypoint.getTravelTime()));
-                            });
-                        });
+                        level.getMovingPlatforms().forEach(movingPlatform -> movingPlatform.getWaypoints().forEach(waypoint -> {
+                            waypoint.setPauseTime((short) multipleInt(waypoint.getPauseTime()));
+                            waypoint.setTravelTime((short) multipleInt(waypoint.getTravelTime()));
+                        }));
 
-                        level.getFallingPlatforms().forEach(fallingPlatform -> {
-                            fallingPlatform.setFloatTime((short) multipleInt(fallingPlatform.getFloatTime()));
-                        });
+                        level.getFallingPlatforms().forEach(fallingPlatform -> fallingPlatform.setFloatTime((short) multipleInt(fallingPlatform.getFloatTime())));
 
                         return level;
                     }).output(String.format("%s/x%.2f", outputDirectory, speedRate));
@@ -83,9 +79,7 @@ public class LevelModifications {
         public FallingPlatformsHardlyFall(File levelDirectory, File output) {
             new LevelModifier(levelDirectory)
                     .operate(level -> {
-                        level.getFallingPlatforms().forEach(fallingPlatform -> {
-                            fallingPlatform.setFloatTime((short) 32767);
-                        });
+                        level.getFallingPlatforms().forEach(fallingPlatform -> fallingPlatform.setFloatTime((short) 32767));
                         return level;
                     })
                     .output(output);
@@ -96,9 +90,7 @@ public class LevelModifications {
         public FallingPlatformsInstantlyFall(File levelDirectory, File output) {
             new LevelModifier(levelDirectory)
                     .operate(level -> {
-                        level.getFallingPlatforms().forEach(fallingPlatform -> {
-                            fallingPlatform.setFloatTime((short) 0);
-                        });
+                        level.getFallingPlatforms().forEach(fallingPlatform -> fallingPlatform.setFloatTime((short) 0));
                         return level;
                     })
                     .output(output);
