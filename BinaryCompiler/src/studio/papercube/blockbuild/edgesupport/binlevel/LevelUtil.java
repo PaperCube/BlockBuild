@@ -15,10 +15,9 @@ public class LevelUtil {
      * 解释成二进制数据，这个数据如果被输出到文件，即是一个有效关卡。然后再将二进制数据重新解释成
      * 一个 {@link studio.papercube.blockbuild.edgesupport.binlevel.Level}对象
      *
-     * @param level 原始关卡
      * @return 复制的关卡。
      */
-    public Level duplicate(Level level) {
+    public Level duplicate() {
         return Level.build(level.toByteArray());
     }
 

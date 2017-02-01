@@ -88,3 +88,9 @@ class RenderablePrism(val prism: Prism) : RenderableElement() {
     }
 }
 
+internal fun Vector.makeAxisOrderNormal():Vector{
+    with(this){
+        return Vector(x,z,y)
+    }
+}
+
