@@ -4,9 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-/**
- * Created by imzhy on 2016/12/3.
- */
 public class Vector implements Comparable<Vector> {
     short x;
     short y;

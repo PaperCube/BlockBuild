@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/BinaryCompiler/BinaryCompiler.iml" filepath="$PROJECT_DIR$/BinaryCompiler/BinaryCompiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/BlockBuild.iml" filepath="$PROJECT_DIR$/BlockBuild.iml" />
       <module fileurl="file://$PROJECT_DIR$/BlockBuildApp/BlockBuildApp.iml" filepath="$PROJECT_DIR$/BlockBuildApp/BlockBuildApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DeJ2MEedEdge/DeJ2MEedEdge.iml" filepath="$PROJECT_DIR$/DeJ2MEedEdge/DeJ2MEedEdge.iml" />
     </modules>
   </component>
 </project>

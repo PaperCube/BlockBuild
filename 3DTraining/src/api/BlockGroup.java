@@ -6,9 +6,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 
-/**
- * Created by imzhy on 2017/1/22.
- */
 public class BlockGroup extends Group {
     final Xform axisGroup = new Xform();
     final Xform objectGroup = new Xform();

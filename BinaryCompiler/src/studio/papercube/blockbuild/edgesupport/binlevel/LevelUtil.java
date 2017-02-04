@@ -1,8 +1,5 @@
 package studio.papercube.blockbuild.edgesupport.binlevel;
 
-/**
- * Created by imzhy on 2017/1/1.
- */
 public class LevelUtil {
     private Level level;
 

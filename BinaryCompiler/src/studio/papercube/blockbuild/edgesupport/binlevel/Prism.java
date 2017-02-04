@@ -1,8 +1,5 @@
 package studio.papercube.blockbuild.edgesupport.binlevel;
 
-/**
- * Created by imzhy on 2016/12/4.
- */
 public class Prism {
     Vector position;
     byte energy = 1;

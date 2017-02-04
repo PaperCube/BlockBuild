@@ -8,9 +8,6 @@ import studio.papercube.blockbuild.edgesupport.binlevel.LevelUtil
 import studio.papercube.blockbuild.edgesupport.binlevel.Vector
 import studio.papercube.blockbuild.view3d.renderableelements.*
 
-/**
- * Created by PaperCube on 2017/1/28.
- */
 open class LevelView() : EdgeAxisCompatibleBlockGroup() {
     private var currentLevelGroup: Group? = null
     var focusPositionX = 0
@@ -71,12 +68,15 @@ open class LevelView() : EdgeAxisCompatibleBlockGroup() {
         level = level
     }
 
+
+
     @Deprecated("USE THE ONE IN LEVEL_EDITOR--TEST ONLY.")
-    fun addStaticBlock() {
+    fun addStaticBlock_DEPRECATED() {
         level?.run {
             collisionMap.addVector(Vector(focusPositionX.toShort(), focusPositionY.toShort(), focusPositionZ.toShort()))
             reload()
         }
     }
+
 
 }

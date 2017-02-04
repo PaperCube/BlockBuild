@@ -1,8 +1,5 @@
 package studio.papercube.blockbuild.edgesupport.binlevel;
 
-/**
- * Created by imzhy on 2016/12/4.
- */
 public class Resizer {
     public static final byte DIRECTION_SHRINK = 0;
     public static final byte DIRECTION_GROW = 1;

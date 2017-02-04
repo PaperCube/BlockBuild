@@ -4,9 +4,6 @@ import javafx.scene.Scene;
 
 import static api.BlockGroup.*;
 
-/**
- * Created by imzhy on 2017/1/22.
- */
 public class DraggableBlockGroupInputHandler {
     final Scene scene;
     final BlockGroup blockGroup;

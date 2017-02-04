@@ -1,8 +1,5 @@
 package studio.papercube.blockbuild.edgesupport.binlevel;
 
-/**
- * Created by imzhy on 2016/12/3.
- */
 @SuppressWarnings("unused")
 public class LevelHeader {
     int levelId;

@@ -2,9 +2,6 @@ package studio.papercube.blockbuild.edgesupport.binlevel;
 
 import java.io.File;
 
-/**
- * Created by imzhy on 2016/12/4.
- */
 class ConstantPool {
     public static final String level1stcontact = "E:\\Projects\\BlockBuild\\resForTest\\level309.bin";
     public static final String level5353D = "E:\\Applications\\Entertainment\\EdgeTest\\levels\\level535_3D.bin";

@@ -8,10 +8,6 @@ import javafx.scene.paint.PhongMaterial
 import javafx.scene.shape.Box
 import studio.papercube.blockbuild.edgesupport.binlevel.*
 
-/**
- * Created by PaperCube on 2017/1/28.
- */
-
 private fun Vector.toBox(): Box {
     return VectorBox(this)
 }

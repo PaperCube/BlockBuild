@@ -9,9 +9,6 @@ import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
-/**
- * Created by imzhy on 2016/12/31.
- */
 public class LevelModifier {
     private Stream<Pair<File, Level>> levelStream;
     private Function<String, String> levelNameModifier = any -> any;

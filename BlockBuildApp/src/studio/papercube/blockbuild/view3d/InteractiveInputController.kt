@@ -12,7 +12,7 @@ import java.util.function.Consumer
 import java.util.function.Predicate
 
 
-class InteractiveInputController(internal val scene: Scene, internal val levelView: LevelView) {
+class InteractiveInputController(internal val scene: Scene, private val levelView: LevelView) {
     internal var mousePosX: Double = 0.toDouble()
 
 

@@ -49,7 +49,7 @@ import java.io.File
  */
 class LevelViewer : Application() {
 
-    private val levelView = LevelView()
+    private val levelView = LevelEditingView()
     private lateinit var inputHandler: InteractiveInputController
 
     override fun start(primaryStage: Stage) {
@@ -76,7 +76,7 @@ class LevelViewer : Application() {
         scene.camera = levelView.getCamera()
         inputHandler.run {
             registerKeyPressEvent(KeyCode.O, CTRL){ loadLevelMap() }
-            registerKeyPressEvent(KeyCode.S){ levelView.addStaticBlock()}
+            registerKeyPressEvent(KeyCode.S){ levelView.addStaticBlock() }
         }
         loadLevelMap()
 

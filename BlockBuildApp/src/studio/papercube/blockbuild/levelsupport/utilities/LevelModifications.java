@@ -5,9 +5,6 @@ import studio.papercube.blockbuild.edgesupport.binlevel.Bumper;
 import java.io.File;
 import java.util.Scanner;
 
-/**
- * Created by imzhy on 2016/12/31.
- */
 public class LevelModifications {
     public static class EnergeticPrisms {
         public EnergeticPrisms(File levelDirectory, File output) {

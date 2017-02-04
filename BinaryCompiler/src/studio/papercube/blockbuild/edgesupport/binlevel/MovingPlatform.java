@@ -3,9 +3,6 @@ package studio.papercube.blockbuild.edgesupport.binlevel;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by imzhy on 2016/12/4.
- */
 public class MovingPlatform {
     byte autoStart;
     byte loopStartIndex;
