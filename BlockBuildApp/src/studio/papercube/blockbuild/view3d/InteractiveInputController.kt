@@ -93,13 +93,9 @@ class InteractiveInputController(internal val scene: Scene, private val levelVie
             when (event.code) {
                 Z -> {
                     if (event.isControlDown) {
-                        levelView.cameraTranslateX = 0.0
-                        levelView.cameraTranslateY = 0.0
-                        levelView.cameraTranslateZ = 0.0
+                        levelView.resetFocus()
                     }
-                    levelView.zoom = CAMERA_INITIAL_ZOOM
-                    levelView.angleRotateY = CAMERA_INITIAL_Y_ANGLE
-                    levelView.angleRotateX = CAMERA_INITIAL_X_ANGLE
+                    levelView.resetView()
                 }
                 X -> levelView.getAxisGroup().isVisible = !levelView.getAxisGroup().isVisible
                 V -> levelView.getObjectGroup().isVisible = !levelView.getObjectGroup().isVisible

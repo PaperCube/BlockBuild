@@ -19,7 +19,7 @@ public class BlockGroup extends Group {
 
     public static final double CAMERA_INITIAL_X_ANGLE = -22.0;
     public static final double CAMERA_INITIAL_Y_ANGLE = -196.0;
-    public static final double CAMERA_INITIAL_ZOOM = -54;
+    public static final double CAMERA_INITIAL_ZOOM = -20;
     public static final double CAMERA_NEAR_CLIP = 0.1;
     public static final double CAMERA_FAR_CLIP = 10000.0;
     public static final double AXIS_LENGTH = 250.0;
@@ -85,6 +85,12 @@ public class BlockGroup extends Group {
         setAngleRotateX(CAMERA_INITIAL_X_ANGLE);
         setAngleRotateY(CAMERA_INITIAL_Y_ANGLE);
         setZoom(CAMERA_INITIAL_ZOOM);
+    }
+
+    public void resetFocus(){
+        setCameraTranslateX(0);
+        setCameraTranslateY(0);
+        setCameraTranslateZ(0);
     }
 
 

@@ -75,8 +75,9 @@ class LevelViewer : Application() {
 
         scene.camera = levelView.getCamera()
         inputHandler.run {
-            registerKeyPressEvent(KeyCode.O, CTRL){ loadLevelMap() }
-            registerKeyPressEvent(KeyCode.S){ levelView.addStaticBlock() }
+            registerKeyPressEvent(KeyCode.O, CTRL) { loadLevelMap() }
+            registerKeyPressEvent(KeyCode.S) { levelView.addStaticBlock() }
+            registerKeyPressEvent(KeyCode.DELETE) { levelView.deleteCurrentStaticBlock() }
         }
         loadLevelMap()
 

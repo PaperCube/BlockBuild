@@ -4,7 +4,6 @@ import javafx.scene.Group
 import javafx.scene.paint.Color
 import javafx.scene.paint.PhongMaterial
 import studio.papercube.blockbuild.edgesupport.binlevel.Level
-import studio.papercube.blockbuild.edgesupport.binlevel.LevelUtil
 import studio.papercube.blockbuild.edgesupport.binlevel.Vector
 import studio.papercube.blockbuild.view3d.renderableelements.*
 
@@ -13,18 +12,21 @@ open class LevelView() : EdgeAxisCompatibleBlockGroup() {
     var focusPositionX = 0
         set(value) {
             field = value
+            onFocusChanged()
             cameraTranslateX = focusPositionX.toDouble()
         }
 
     var focusPositionY = 0
         set(value) {
             field = value
+            onFocusChanged()
             cameraTranslateY = focusPositionY.toDouble()
         }
 
     var focusPositionZ = 0
         set(value) {
             field = value
+            onFocusChanged()
             cameraTranslateZ = focusPositionZ.toDouble()
         }
 
@@ -45,7 +47,6 @@ open class LevelView() : EdgeAxisCompatibleBlockGroup() {
                 val red = PhongMaterial(Color.RED)
                 val blue = PhongMaterial(Color.LIMEGREEN)
                 val lightBlack = PhongMaterial(Color.rgb(30, 30, 30))
-
 
                 collisionMap.duplicateVectors().forEach { vector -> nodes.add(RenderableStaticBlock(vector).toNode()) }
                 movingPlatforms.forEach { movingPlatform -> nodes.add(LastWaypointRenderedMovingPlatform(movingPlatform).toNode()) }
@@ -68,6 +69,18 @@ open class LevelView() : EdgeAxisCompatibleBlockGroup() {
         level = level
     }
 
+    /**
+     * 在焦点坐标改变之后执行
+     */
+    protected open fun onFocusChanged() {
+    }
+
+    override fun resetFocus() {
+        super.resetFocus()
+        focusPositionX = cameraTranslateX.toInt()
+        focusPositionY = cameraTranslateY.toInt()
+        focusPositionZ = cameraTranslateZ.toInt()
+    }
 
 
     @Deprecated("USE THE ONE IN LEVEL_EDITOR--TEST ONLY.")
