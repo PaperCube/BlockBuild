@@ -4,22 +4,29 @@ import javafx.scene.Group
 import javafx.scene.paint.Color
 import javafx.scene.paint.PhongMaterial
 import javafx.scene.shape.Box
+import studio.papercube.blockbuild.edgesupport.binlevel.LevelEditor
 import studio.papercube.blockbuild.edgesupport.binlevel.Vector
 
 class LevelEditingView : LevelView() {
+    private var levelEditor:LevelEditor? = null
+
     init {
         children.add(PositionIndicator)
     }
 
-    fun addStaticBlock() {
-        level?.run {
-            collisionMap.addVector(currentPositionToVector())
-            reload()
-        }
+    override fun onLoadLevel() {
+        super.onLoadLevel()
+        val currentLevel = level
+        if(currentLevel !=null) if(levelEditor == null) levelEditor = LevelEditor(currentLevel) else levelEditor?.update(currentLevel)
     }
 
-    fun deleteCurrentStaticBlock() = level?.run {
-        collisionMap.removeVector(currentPositionToVector())
+    fun addStaticBlock() {
+        levelEditor?.addStaticBlock(currentPositionToVector())
+        reload()
+    }
+
+    fun deleteCurrentStaticBlock(){
+        levelEditor?.removeStaticBlock(currentPositionToVector())
         reload()
     }
 
@@ -31,10 +38,14 @@ class LevelEditingView : LevelView() {
         }
     }
 
+    override fun reload() {
+        level = levelEditor?.level
+    }
+
     private fun currentPositionToVector() = Vector(focusPositionX.toShort(), focusPositionY.toShort(), focusPositionZ.toShort())
 
 
-     object PositionIndicator : Group() {
+    object PositionIndicator : Group() {
         val coloredMaterial = PhongMaterial(Color.LIGHTBLUE)
         val box: Box
             get() = Box().run { material = coloredMaterial; return this }

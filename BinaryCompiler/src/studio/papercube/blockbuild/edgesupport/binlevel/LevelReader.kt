@@ -33,12 +33,8 @@ import java.io.InputStream
  */
 
 open class LevelReader(inputStream: InputStream) {
-    private val r: BinaryReader
+    private val r = BinaryReader(inputStream)
     private val level = Level()
-
-    init {
-        r = BinaryReader(inputStream)
-    }
 
     constructor(levelFile: File) : this(BufferedInputStream(FileInputStream(levelFile), 32767))
 
@@ -118,10 +114,11 @@ open class LevelReader(inputStream: InputStream) {
         val header = LevelHeader()
         with(header) {
             levelId = r.readInt()
-            titleLength = r.readInt()
+            val titleLength = r.readInt()
 
-            title = ByteArray(titleLength)
-            for (i in 0 until titleLength) title[i] = r.readByte()
+            val titleBytes = ByteArray(titleLength)
+            for (i in 0 until titleLength) titleBytes[i] = r.readByte()
+            title = String(titleBytes)
 
             timeThresholds = ShortArray(5)
             for (i in 0 until 5) timeThresholds[i] = r.readShort()

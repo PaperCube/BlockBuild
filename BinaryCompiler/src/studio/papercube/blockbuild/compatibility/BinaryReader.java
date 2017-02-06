@@ -145,6 +145,7 @@ public class BinaryReader implements DataInput {
         return Double.longBitsToDouble(readLong());
     }
 
+    @SuppressWarnings("deprecation")
     @Deprecated
     @Override
     public String readLine() throws IOException {

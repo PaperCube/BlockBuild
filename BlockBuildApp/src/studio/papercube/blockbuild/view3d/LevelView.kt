@@ -65,15 +65,16 @@ open class LevelView() : EdgeAxisCompatibleBlockGroup() {
             children.add(currentLevelGroup)
         }
 
-    protected fun reload() {
+    protected open fun reload() {
         level = level
     }
 
     /**
      * 在焦点坐标改变之后执行
      */
-    protected open fun onFocusChanged() {
-    }
+    protected open fun onFocusChanged() {}
+
+    protected open fun onLoadLevel(){}
 
     override fun resetFocus() {
         super.resetFocus()

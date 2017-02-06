@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * 代表一个关卡。具有关卡所有的基本属性。没有措施会保证所有值都是有效的，无效的值应该在输出时被忽略，或者导致错误。
- * Created by imzhy on 2016/12/3.
  */
 @SuppressWarnings({"unused"})
 public class Level implements Cloneable,Serializable {
@@ -279,6 +278,10 @@ public class Level implements Cloneable,Serializable {
         return levelToByteArray.toByteArray();
     }
 
+    public Level bitwiseReplicate(){
+        return Level.build(toByteArray());
+    }
+
     public static Level build(byte[] data) {
         ByteArrayInputStream byteArrayToLevel = new ByteArrayInputStream(data);
         LevelReader reader = new LevelReader(byteArrayToLevel);
@@ -311,23 +314,7 @@ public class Level implements Cloneable,Serializable {
         }
     }
 
-    /**
-     * 想要证明它运行正常，考虑以下代码。<br/>
-     * <code>
-     * Level l = lists.get(0);<br/>
-     * Level.CollisionMap collisionMap = l.collisionMap;<br/>
-     * byte[] a = collisionMap.toByteArray(l.sizeX, l.sizeY, l.sizeZ);<br/>
-     * byte[] b = collisionMap.originalData;<br/>
-     * int breakIndex = -1;<br/><br/>
-     * for (int i = 0; i < Math.max(a.length, b.length); i++)<br/>
-     * if (a[i] != b[i]) {<br/>
-     * breakIndex = i;<br/>
-     * break;<br/>
-     * }<br/>
-     * return breakIndex;<br/>
-     * </code>
-     * 看完后我告诉你，这个不能证明它运行正常。
-     */
+
     public static class CollisionMap {
         private byte[] originalData;
         private List<Vector> vectorList = new ArrayList<>();
