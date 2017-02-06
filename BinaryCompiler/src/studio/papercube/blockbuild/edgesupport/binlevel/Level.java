@@ -258,7 +258,7 @@ public class Level implements Cloneable,Serializable {
     }
 
     public String titleToString() {
-        return header.titleToString();
+        return header.getTitle();
     }
 
 

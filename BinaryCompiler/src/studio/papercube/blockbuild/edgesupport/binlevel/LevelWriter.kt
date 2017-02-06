@@ -106,8 +106,9 @@ open class LevelWriter(val level: Level, outputStream: OutputStream) {
 
     private fun LevelHeader.writeStructure() {
         levelId.writeAsInt()
-        titleLength.writeAsInt()
-        title.writeFully()
+        val titleBytes = title.toByteArray()
+        titleBytes.size.writeAsInt()
+        titleBytes.writeFully()
 
         for (i in 0..4) timeThresholds[i].writeAsShort()
 

@@ -89,7 +89,6 @@ class LevelViewer : Application() {
             val path = if (parameters.raw.size > 0) parameters.raw[0] else FileChooser().showOpenDialog(null)?.absolutePath ?: return
             val level = LevelReader(File(path)).read()
             load(level)
-
         } catch (throwable: Throwable) {
             throwable.printStackTrace()
         }
@@ -97,7 +96,7 @@ class LevelViewer : Application() {
     }
 
     private fun load(level: Level) {
-        println(level.header.titleToString())
+        println(level.header.title)
         levelView.level = level
     }
 

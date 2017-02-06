@@ -34,7 +34,7 @@ class LevelEditingView : LevelView() {
     private fun currentPositionToVector() = Vector(focusPositionX.toShort(), focusPositionY.toShort(), focusPositionZ.toShort())
 
 
-    private object PositionIndicator : Group() {
+     object PositionIndicator : Group() {
         val coloredMaterial = PhongMaterial(Color.LIGHTBLUE)
         val box: Box
             get() = Box().run { material = coloredMaterial; return this }

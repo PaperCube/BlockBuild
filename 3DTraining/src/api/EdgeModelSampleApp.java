@@ -88,7 +88,7 @@ public class EdgeModelSampleApp extends Application {
             //"E:\\Applications\\Entertainment\\EdgeTest\\levels\\level309_winter.bin"
             String path = getParameters().getRaw().size() > 0 ? getParameters().getRaw().get(0) : new FileChooser().showOpenDialog(null).getAbsolutePath();
             Level level = new LevelReader(new File(path)).read();
-            System.out.println(level.getHeader().titleToString());
+            System.out.println(level.getHeader().getTitle());
             ObservableList<Node> children = root.getWorldChildren();
 
             PhongMaterial red = singleColorMaterial(Color.RED);
