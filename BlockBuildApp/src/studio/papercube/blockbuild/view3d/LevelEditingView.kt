@@ -5,10 +5,13 @@ import javafx.scene.paint.Color
 import javafx.scene.paint.PhongMaterial
 import javafx.scene.shape.Box
 import studio.papercube.blockbuild.edgesupport.binlevel.LevelEditor
+import studio.papercube.blockbuild.edgesupport.binlevel.LevelWriter
 import studio.papercube.blockbuild.edgesupport.binlevel.Vector
+import java.io.File
+import java.io.OutputStream
 
 class LevelEditingView : LevelView() {
-    private var levelEditor:LevelEditor? = null
+    private var levelEditor:LevelEditor = LevelEditor(null)
 
     init {
         children.add(PositionIndicator)
@@ -16,17 +19,16 @@ class LevelEditingView : LevelView() {
 
     override fun onLoadLevel() {
         super.onLoadLevel()
-        val currentLevel = level
-        if(currentLevel !=null) if(levelEditor == null) levelEditor = LevelEditor(currentLevel) else levelEditor?.update(currentLevel)
+        levelEditor.level = level
     }
 
     fun addStaticBlock() {
-        levelEditor?.addStaticBlock(currentPositionToVector())
+        levelEditor.addStaticBlock(currentPositionToVector())
         reload()
     }
 
     fun deleteCurrentStaticBlock(){
-        levelEditor?.removeStaticBlock(currentPositionToVector())
+        levelEditor.removeStaticBlock(currentPositionToVector())
         reload()
     }
 
@@ -39,7 +41,12 @@ class LevelEditingView : LevelView() {
     }
 
     override fun reload() {
-        level = levelEditor?.level
+        level = levelEditor.level
+    }
+
+    fun save(outputStream:OutputStream) {
+        levelEditor.autoAdjustSize()
+        levelEditor.level?.let { LevelWriter(it,outputStream).write() }
     }
 
     private fun currentPositionToVector() = Vector(focusPositionX.toShort(), focusPositionY.toShort(), focusPositionZ.toShort())

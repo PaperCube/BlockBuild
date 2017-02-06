@@ -4,13 +4,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * 代表一个关卡。具有关卡所有的基本属性。没有措施会保证所有值都是有效的，无效的值应该在输出时被忽略，或者导致错误。
  */
 @SuppressWarnings({"unused"})
-public class Level implements Cloneable,Serializable {
+public class Level implements Cloneable, Serializable {
     LevelHeader header;
     byte sizeZ;
     short sizeX;
@@ -54,7 +55,8 @@ public class Level implements Cloneable,Serializable {
     byte musicJ2ME;
     byte music;
 
-    public Level(){}
+    public Level() {
+    }
 
     public List<Bumper> getBumpers() {
         return bumpers;
@@ -270,7 +272,7 @@ public class Level implements Cloneable,Serializable {
         }
     }
 
-    public byte[] toByteArray(){
+    public byte[] toByteArray() {
         ByteArrayOutputStream levelToByteArray = new ByteArrayOutputStream();
         LevelWriter writer = new LevelWriter(this, levelToByteArray);
         writer.write();
@@ -278,7 +280,7 @@ public class Level implements Cloneable,Serializable {
         return levelToByteArray.toByteArray();
     }
 
-    public Level bitwiseReplicate(){
+    public Level bitwiseReplicate() {
         return Level.build(toByteArray());
     }
 
@@ -343,7 +345,11 @@ public class Level implements Cloneable,Serializable {
             return vectorList.removeIf(vec -> vec.equals(vector));
         }
 
-        public List<Vector> duplicateVectors(){
+        public List<Vector> duplicateVectors() {
+            return new ArrayList<>(vectorList);
+        }
+
+        public Collection<Vector> getVectors() {
             return new ArrayList<>(vectorList);
         }
 

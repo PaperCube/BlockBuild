@@ -43,6 +43,7 @@ import studio.papercube.blockbuild.edgesupport.binlevel.Level
 import studio.papercube.blockbuild.edgesupport.binlevel.LevelReader
 import studio.papercube.blockbuild.view3d.InteractiveInputController.ModifiersForKeyEvents.CTRL
 import java.io.File
+import java.io.FileOutputStream
 
 /**
  * @author cmcastil, PaperCube
@@ -78,6 +79,9 @@ class LevelViewer : Application() {
             registerKeyPressEvent(KeyCode.O, CTRL) { loadLevelMap() }
             registerKeyPressEvent(KeyCode.S) { levelView.addStaticBlock() }
             registerKeyPressEvent(KeyCode.DELETE) { levelView.deleteCurrentStaticBlock() }
+            registerKeyPressEvent(KeyCode.S, CTRL) {
+                FileChooser().showSaveDialog(null)?.let { levelView.save(FileOutputStream(it)) }
+            }
         }
         loadLevelMap()
 

@@ -63,6 +63,8 @@ open class LevelView() : EdgeAxisCompatibleBlockGroup() {
 
             currentLevelGroup = viewGroup
             children.add(currentLevelGroup)
+
+            onLoadLevel()
         }
 
     protected open fun reload() {

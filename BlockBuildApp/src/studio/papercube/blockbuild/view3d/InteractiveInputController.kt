@@ -34,9 +34,11 @@ class InteractiveInputController(internal val scene: Scene, private val levelVie
         fun real(keyEvent: KeyEvent) = predicate.invoke(keyEvent)
     }
 
+    private fun KeyEvent.actualPressed() =ModifiersForKeyEvents.values().filter { it.real(this) }.toTypedArray()
+
     //registers
     fun registerKeyPressEvent(keyCode: KeyCode, vararg modifiers: ModifiersForKeyEvents, action: () -> Unit): Consumer<KeyEvent> {
-        val eventConsumer =  Consumer { keyEvent: KeyEvent -> if (keyEvent.code == keyCode && modifiers.all { it.real(keyEvent) }) action() }
+        val eventConsumer =  Consumer { keyEvent: KeyEvent -> if (keyEvent.code == keyCode && Arrays.equals(modifiers, keyEvent.actualPressed())) action() }
         eventsOnKeyPressed.add(eventConsumer)
         return eventConsumer
     }

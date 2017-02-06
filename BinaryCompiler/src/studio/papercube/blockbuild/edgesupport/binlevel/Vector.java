@@ -87,4 +87,16 @@ public class Vector implements Comparable<Vector> {
     public Vector downBlock() {
         return new Vector(x, y, ((short) (z - 1)));
     }
+
+    public short component1() {
+        return x;
+    }
+
+    public short component2(){
+        return y;
+    }
+
+    public short component3(){
+        return z;
+    }
 }
