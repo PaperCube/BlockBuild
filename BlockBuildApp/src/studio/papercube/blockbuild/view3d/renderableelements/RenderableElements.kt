@@ -2,13 +2,11 @@ package studio.papercube.blockbuild.view3d.renderableelements
 
 import javafx.geometry.Point3D
 import javafx.scene.Node
-import javafx.scene.image.Image
 import javafx.scene.paint.Color
 import javafx.scene.paint.Material
 import javafx.scene.paint.PhongMaterial
 import javafx.scene.shape.Box
 import studio.papercube.blockbuild.edgesupport.binlevel.*
-import studio.papercube.blockbuild.resources.Resource
 
 private fun Vector.toBox(): Box {
     return VectorBox(this)
@@ -21,12 +19,6 @@ private fun Vector.toBox(material: Material): Box {
     return box
 }
 
-val texturedMaterial:PhongMaterial by lazy{
-    val material = PhongMaterial()
-    material.diffuseMap = Image(Resource.javaClass.getResourceAsStream("blockside.png"))
-    material
-}
-
 class VectorBox(vector: Vector) : Box(1.0, 1.0, 1.0) {
     init {
         with(vector) {
@@ -34,7 +26,7 @@ class VectorBox(vector: Vector) : Box(1.0, 1.0, 1.0) {
             translateY = z.toDouble()
             translateZ = y.toDouble()
         }
-        material = texturedMaterial
+        material = Materials.staticBlockMaterial
     }
 }
 
