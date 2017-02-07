@@ -1,10 +1,7 @@
 package studio.papercube.blockbuild.view3d;
 
 import javafx.collections.ObservableList;
-import javafx.scene.DepthTest;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.PerspectiveCamera;
+import javafx.scene.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -34,7 +31,7 @@ public class BlockGroup extends Group {
         setDepthTest(DepthTest.ENABLE);
 
         resetView();
-
+//        getChildren().add(new AmbientLight());
     }
 
     //   void buildScene() {

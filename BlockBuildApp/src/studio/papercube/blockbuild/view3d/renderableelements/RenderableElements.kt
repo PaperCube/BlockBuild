@@ -2,20 +2,29 @@ package studio.papercube.blockbuild.view3d.renderableelements
 
 import javafx.geometry.Point3D
 import javafx.scene.Node
+import javafx.scene.image.Image
 import javafx.scene.paint.Color
 import javafx.scene.paint.Material
 import javafx.scene.paint.PhongMaterial
 import javafx.scene.shape.Box
 import studio.papercube.blockbuild.edgesupport.binlevel.*
+import studio.papercube.blockbuild.resources.Resource
 
 private fun Vector.toBox(): Box {
     return VectorBox(this)
 }
 
 private fun Vector.toBox(material: Material): Box {
+    val material = PhongMaterial()
     val box = VectorBox(this)
     box.material = material
     return box
+}
+
+val texturedMaterial:PhongMaterial by lazy{
+    val material = PhongMaterial()
+    material.diffuseMap = Image(Resource.javaClass.getResourceAsStream("blockside.png"))
+    material
 }
 
 class VectorBox(vector: Vector) : Box(1.0, 1.0, 1.0) {
@@ -25,6 +34,7 @@ class VectorBox(vector: Vector) : Box(1.0, 1.0, 1.0) {
             translateY = z.toDouble()
             translateZ = y.toDouble()
         }
+        material = texturedMaterial
     }
 }
 
@@ -79,10 +89,12 @@ class RenderablePrism(val prism: Prism) : RenderableElement() {
             box.material = PhongMaterial(Color.YELLOW)
             box.rotationAxis = Point3D(0.0, 1.0, 2.0).normalize()
             box.rotate = 80.0
+
             return box
         }
     }
 }
+
 
 internal fun Vector.makeAxisOrderNormal():Vector{
     with(this){
