@@ -38,6 +38,15 @@ class LevelEditor(levelSource: Level?) {
         return level?.collisionMap?.removeVector(position) ?: false
     }
 
+    fun addPrism(position: Vector):Boolean {
+        val prism = Prism(position)
+        return level?.prisms?.add(prism) ?: false
+    }
+
+    fun removePrism(position: Vector):Boolean {
+        return level?.prisms?.removeAll { it.position==position } ?: false
+    }
+
 
     fun autoAdjustSize() {
         val level = this.level ?: return

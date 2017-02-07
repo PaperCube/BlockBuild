@@ -101,7 +101,7 @@ class InteractiveInputController(internal val scene: Scene, private val levelVie
                 }
                 X -> levelView.getAxisGroup().isVisible = !levelView.getAxisGroup().isVisible
                 V -> levelView.getObjectGroup().isVisible = !levelView.getObjectGroup().isVisible
-                P -> {
+                I -> {
                     val value = String.format("AngleRotateX=%s,AngleRotateY=%s,CameraTranslateZ=%s,%n" +
                             "CameraZoom=%s,PositionTranslateX=%s,PositionTranslateY=%s,%n" +
                             "PositionTranslateZ=%s",

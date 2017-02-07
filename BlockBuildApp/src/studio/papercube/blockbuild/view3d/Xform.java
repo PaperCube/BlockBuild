@@ -37,6 +37,9 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 
+/**
+ * Oracle Official 3D View Component.
+ */
 public class Xform extends Group {
 
     public enum RotateOrder {

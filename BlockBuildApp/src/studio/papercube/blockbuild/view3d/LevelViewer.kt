@@ -78,10 +78,11 @@ class LevelViewer : Application() {
         inputHandler.run {
             registerKeyPressEvent(KeyCode.O, CTRL) { loadLevelMap() }
             registerKeyPressEvent(KeyCode.S) { levelView.addStaticBlock() }
-            registerKeyPressEvent(KeyCode.DELETE) { levelView.deleteCurrentStaticBlock() }
+            registerKeyPressEvent(KeyCode.DELETE) { levelView.deleteCurrent() }
             registerKeyPressEvent(KeyCode.S, CTRL) {
                 FileChooser().showSaveDialog(null)?.let { levelView.save(FileOutputStream(it)) }
             }
+            registerKeyPressEvent(KeyCode.P){ levelView.addPrism()}
         }
         loadLevelMap()
 

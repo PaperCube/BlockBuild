@@ -47,7 +47,7 @@ open class LevelWriter(val level: Level, outputStream: OutputStream) {
 
             0.writeAsShort() //unknownShort6
 
-            legacyMinimap.toByteArray().writeFully()
+            Level.LegacyMinimap(unknownShort3,unknownShort4).toByteArray().writeFully()
 
             collisionMap.toByteArray(sizeX, sizeY, sizeZ.toShort()).writeFully()
 

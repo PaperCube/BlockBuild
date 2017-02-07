@@ -7,11 +7,10 @@ import javafx.scene.shape.Box
 import studio.papercube.blockbuild.edgesupport.binlevel.LevelEditor
 import studio.papercube.blockbuild.edgesupport.binlevel.LevelWriter
 import studio.papercube.blockbuild.edgesupport.binlevel.Vector
-import java.io.File
 import java.io.OutputStream
 
 class LevelEditingView : LevelView() {
-    private var levelEditor:LevelEditor = LevelEditor(null)
+    private var levelEditor: LevelEditor = LevelEditor(null)
 
     init {
         children.add(PositionIndicator)
@@ -27,8 +26,18 @@ class LevelEditingView : LevelView() {
         reload()
     }
 
-    fun deleteCurrentStaticBlock(){
-        levelEditor.removeStaticBlock(currentPositionToVector())
+    fun deleteCurrent() {
+        levelEditor.run {
+            currentPositionToVector().let {
+                removePrism(it)
+                removeStaticBlock(it)
+            }
+        }
+        reload()
+    }
+
+    fun addPrism() {
+        levelEditor.addPrism(currentPositionToVector())
         reload()
     }
 
@@ -44,9 +53,9 @@ class LevelEditingView : LevelView() {
         level = levelEditor.level
     }
 
-    fun save(outputStream:OutputStream) {
+    fun save(outputStream: OutputStream) {
         levelEditor.autoAdjustSize()
-        levelEditor.level?.let { LevelWriter(it,outputStream).write() }
+        levelEditor.level?.let { LevelWriter(it, outputStream).write() }
     }
 
     private fun currentPositionToVector() = Vector(focusPositionX.toShort(), focusPositionY.toShort(), focusPositionZ.toShort())

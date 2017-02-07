@@ -4,6 +4,14 @@ public class Prism {
     Vector position;
     byte energy = 1;
 
+    Prism() {
+        this(new Vector());
+    }
+
+    public Prism(Vector position) {
+        this.position = position;
+    }
+
     public byte getEnergy() {
         return energy;
     }
@@ -17,7 +25,6 @@ public class Prism {
     }
 
     public Vector getPosition() {
-
         return position;
     }
 }
