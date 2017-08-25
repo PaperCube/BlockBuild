@@ -1,4 +1,4 @@
-package studio.papercube.blockbuild.compatibility;
+package studio.papercube.blockbuild.io;
 
 import org.jetbrains.annotations.NotNull;
 

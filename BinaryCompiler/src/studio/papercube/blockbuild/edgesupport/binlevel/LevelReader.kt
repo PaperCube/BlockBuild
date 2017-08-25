@@ -1,6 +1,6 @@
 package studio.papercube.blockbuild.edgesupport.binlevel
 
-import studio.papercube.blockbuild.compatibility.BinaryReader
+import studio.papercube.blockbuild.io.BinaryReader
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileInputStream

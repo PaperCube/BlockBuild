@@ -67,7 +67,7 @@ public class LevelModifier {
 
 
     /**
-     * 不可变的一对。参见@link{}
+     * 不可变的一对。参见 {@link kotlin.Pair}
      *
      * @param <A> 第一个
      * @param <B> 第二个

@@ -17,6 +17,24 @@ public class LevelModifications {
         }
     }
 
+    public static class SharpEyes {
+        public static void main(String[] args) {
+            new SharpEyes(new File("E:\\Applications\\Entertainment\\EDGE_win_humble\\levels"), new File("E:\\Applications\\Entertainment\\EdgeTest\\levels"));
+        }
+
+        public SharpEyes(File levelDirecotry, File outputDir) {//莎普爱思滴眼液
+            new LevelModifier(levelDirecotry)
+                    .operate(level -> {
+                        level.getButtons().forEach(button -> {
+                            if (button.getVisibility() == 0) button.setVisibility((byte) 2);
+                        });
+                        level.getResizers().forEach(resizer -> resizer.setVisible(true));
+                        return level;
+                    })
+                    .output(outputDir);
+        }
+    }
+
     public static class SpeedModifier {
         public static void main(String[] args) throws InterruptedException {
             System.out.println("欢迎使用SpeedModifier. 这个应用可以更改一个目录下所有有效Edge关卡的速度。这是一个测试用的程序，并且不提供更新（除非我够勤快），但是欢迎反馈BUG。" +

@@ -1,6 +1,6 @@
 package studio.papercube.blockbuild.edgesupport.binlevel
 
-import studio.papercube.blockbuild.compatibility.BinaryWriter
+import studio.papercube.blockbuild.io.BinaryWriter
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
