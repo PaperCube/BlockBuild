@@ -164,21 +164,20 @@ open class LevelReader(inputStream: InputStream) {
     }
 
     private fun readBumper(): Bumper {
-        fun readSide(): Bumper.Side {
-            with(Bumper.Side()) {
+        fun readSide(side: Bumper.Side) {
+            with(side) {
                 startDelay = r.readShort()
                 pulseRate = r.readShort()
-                return this
             }
         }
 
         with(Bumper()) {
             enabled = r.readBoolean()
             position = readVector()
-            north = readSide()
-            east = readSide()
-            south = readSide()
-            west = readSide()
+            readSide(north)
+            readSide(east)
+            readSide(south)
+            readSide(west)
             return this
         }
     }
