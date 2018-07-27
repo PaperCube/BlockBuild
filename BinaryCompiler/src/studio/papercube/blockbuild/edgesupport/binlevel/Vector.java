@@ -50,6 +50,11 @@ public class Vector implements Comparable<Vector> {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(x, y, z);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof Vector) {
             Vector v = (Vector) obj;

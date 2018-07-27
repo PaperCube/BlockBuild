@@ -3,9 +3,7 @@ package studio.papercube.blockbuild.edgesupport.binlevel;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * 代表一个关卡。具有关卡所有的基本属性。没有措施会保证所有值都是有效的，无效的值应该在输出时被忽略，或者导致错误。
@@ -319,7 +317,11 @@ public class Level implements Cloneable, Serializable {
 
     public static class CollisionMap {
         private byte[] originalData;
-        private List<Vector> vectorList = new ArrayList<>();
+        private HashSet<Vector> vectorList = new HashSet<>();
+
+        public static CollisionMap fromLevelSize(Level level) {
+            return new CollisionMap(level.sizeX, level.sizeY, level.sizeZ);
+        }
 
         public CollisionMap(byte[] data, short sizeX, short sizeY, short sizeZ) {
             originalData = data;
@@ -334,7 +336,10 @@ public class Level implements Cloneable, Serializable {
 
                 index = (index + 7) / 8 * 8; //读完一层，不到一字节就补0
             }
+        }
 
+        public CollisionMap(short sizeX, short sizeY, short sizeZ) {
+            this(null, sizeX, sizeY, sizeZ);
         }
 
         public boolean addVector(Vector vector) {
@@ -349,8 +354,12 @@ public class Level implements Cloneable, Serializable {
             return new ArrayList<>(vectorList);
         }
 
+        public Set<Vector> copyVectors() {
+            return new HashSet<>(vectorList);
+        }
+
         public Collection<Vector> getVectors() {
-            return new ArrayList<>(vectorList);
+            return new HashSet<>(vectorList);
         }
 
         public byte[] toByteArray(short sizeX, short sizeY, short sizeZ) {
