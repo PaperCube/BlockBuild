@@ -319,10 +319,6 @@ public class Level implements Cloneable, Serializable {
         private byte[] originalData;
         private HashSet<Vector> vectorList = new HashSet<>();
 
-        public static CollisionMap fromLevelSize(Level level) {
-            return new CollisionMap(level.sizeX, level.sizeY, level.sizeZ);
-        }
-
         public CollisionMap(byte[] data, short sizeX, short sizeY, short sizeZ) {
             originalData = data;
             int index = 0;
@@ -338,8 +334,8 @@ public class Level implements Cloneable, Serializable {
             }
         }
 
-        public CollisionMap(short sizeX, short sizeY, short sizeZ) {
-            this(null, sizeX, sizeY, sizeZ);
+        public CollisionMap() {
+
         }
 
         public boolean addVector(Vector vector) {
