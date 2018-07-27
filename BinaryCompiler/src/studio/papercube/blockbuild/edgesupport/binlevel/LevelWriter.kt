@@ -134,6 +134,8 @@ open class LevelWriter(val level: Level, outputStream: OutputStream) {
         clones.writeAsShort()
         fullBlock.writeAsBoolean()
 
+        waypoints.size.requireRange(0..255)
+
         waypoints.size.writeAsByte()
         waypoints.forEach { it.writeStructure() }
     }
@@ -256,6 +258,12 @@ open class LevelWriter(val level: Level, outputStream: OutputStream) {
 
     private fun Boolean.writeAsBoolean() = w.writeBoolean(this)
 
+    private fun Number.requireRange(range: LongRange, desc: String = "") {
+        if (this.toLong() !in range) throw ArithmeticException("$this is out of range $range")
+    }
 
+    private fun Number.requireRange(range: IntRange, desc: String = "") {
+        if (this.toInt() !in range) throw ArithmeticException("$this is out of range $range")
+    }
 }
 
