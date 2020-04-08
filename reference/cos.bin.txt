@@ -1,0 +1,5 @@
+struct cos_bin_t {
+    short data[181];
+};
+
+// data[i] = (short)(cos(degtorad(i)) * 256);

@@ -1,0 +1,22 @@
+// Multilanguage strings
+
+loc_lang_t {
+    char lang[2];   // 2-char country code
+};
+
+loc_string_t {
+    short length;
+    short value[length];    // UCS-2 string
+};
+
+loc_string_set_t {
+    u32 key;                // some sort of hash
+    loc_string_t strings[num_langs];
+}
+
+loc_file_t {
+    short num_langs;
+    loc_lang_t langs[num_langs];
+    short num_strings;
+    loc_string_set_t string_sets[num_strings];
+};

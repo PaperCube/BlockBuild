@@ -1,0 +1,47 @@
+// Material
+
+struct ema_texture_t {
+    asset_hash_t asset_texture;   // asset hash of a .etx texture
+    int unknown1[4];              // seems to be texture address mode, 0 = clamp, 2 = wrap
+    int unknown2[3];
+};
+
+struct ema_default_transform_t {
+    float scale_u;
+    float scale_v;
+    float rotation;
+    float translation_u;
+    float translation_v;
+};
+// use { 1, 1, 0, 0, 0 } as default
+
+struct ema_animation_block_t {
+    int unknown1;   // texture id?
+    keyframe_block_t scale_u;
+    keyframe_block_t scale_v;
+    keyframe_block_t rotation;
+    keyframe_block_t translation_u;
+    keyframe_block_t translation_v;
+};
+
+struct ema_file_t {
+    asset_header_t asset_header;
+    short name_len;
+    char name[name_len];
+    int num_textures;
+    ema_texture_t textures[num_textures];
+    u32 color1;
+    u32 color2;
+    u32 color3;
+    u32 color4;
+    float unknown1;
+    int unknown2;
+    int unknown3;
+    int unknown4;
+    int num_default_transforms;   // always(?) the same as num_textures
+    ema_default_transform_t default_transforms[num_default_transforms];
+    int num_animation_blocks;
+    ema_animation_block_t animation_blocks[num_animation_blocks];
+    int unknown5;   // always 4?
+    int unknown6;   // always 5?
+};

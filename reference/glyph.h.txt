@@ -1,0 +1,19 @@
+// Bitmap Font
+
+struct glyph_entry_t {
+    short char_value;  // UCS-2
+    short width;
+    short height;
+    short vertical_offset;
+    short unknown1;
+    char data[(width * height * encoding) / 8];
+                    // alpha channel in standard raster order
+};
+
+struct glyph_file_t {
+    short num_glyphs;
+    short unknown1;
+    short encoding; // bits per pixel. only 0x08 is seen in the wild.
+                    // only 0x04 and 0x08 seem to render anything
+    glyph_entry_t glyphs[num_glyphs];
+};

@@ -1,0 +1,35 @@
+// Texture
+
+// for engine version 18-03 (RUSH, some EDGE builds)
+struct etx_file_t {
+    asset_header_t asset_header;
+    char data[];  // image in PNG format. No length provided, just read to the EOF.
+};
+
+// for engine version 18-04 (some EDGE builds)
+struct etx_file_t {
+    asset_header_t asset_header;
+    short width;
+    short height;
+    int unknown1;
+    int data_length;          // width * height * 4
+    char data[data_length];   // BGRA8888 in standard raster scan order
+};
+
+// for engine version 00-04 (Toki Tori 2+)
+struct etx_file_t {
+    asset_header_t asset_header;
+    short width;
+    short height;
+    short depth;    // 1 for non-volumetric textures
+    short mipmap_count;
+    short unknown1;
+    short format;   // this might be a flags-based thing, I'm unsure.
+                    // so far the only values I've seen are:
+                    // 0x0006 = BGRA8888
+                    // 0x0206 = A8  (alpha-only, used for lightmasks)
+    int data_length_dst;
+    int data_length_src;
+    char data[data_length_src];   // compressed with FastLZ.
+                                  // Decompresses to be of length `data_length_dst`
+};

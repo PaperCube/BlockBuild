@@ -1,0 +1,77 @@
+// 3D Mesh
+
+struct vec2_t {
+    float x;
+    float y;
+};
+
+struct vec3_t {
+    float x;
+    float y;
+    float z;
+};
+
+struct eso_header_t {
+    int unknown1;
+    int unknown2;
+    asset_hash_t asset_child;
+    asset_hash_t asset_sibling;
+    int unknown3;
+    int unknown4;
+    int unknown5;
+    float scale_xyz;
+    vec3_t translate;
+    vec3_t rotate;
+    vec3_t scale;
+    float unknown6;
+    int unknown7;
+    int num_models;
+    // if (num_models > 0) {
+      vec3_t bounding_min;
+      vec3_t bounding_max;
+    // }
+};
+
+enum TYPE_FLAG {
+    TYPE_FLAG_NORMALS = 0x01,
+    TYPE_FLAG_COLORS = 0x02,
+    TYPE_FLAG_TEX_COORDS = 0x04,
+    TYPE_FLAG_TEX_COORDS_2 = 0x08 // only seen in RUSH for the checkerboard pattern
+};
+
+struct eso_model_t {
+    asset_hash_t asset_material;
+    u32 type_flags;
+    int num_verts;
+    int num_polys;
+    int unknown1;
+    vec3_t vertices[num_verts];
+    // if (type_flags & TYPE_FLAG_NORMALS)
+      vec3_t normals[num_verts];
+    // if (type_flags & TYPE_FLAG_COLORS)
+      u32 colors[num_verts];
+    // if (type_flags & TYPE_FLAG_TEX_COORDS)
+      vec2_t tex_coords[num_verts];
+    // if (type_flags & TYPE_FLAG_TEX_COORDS_2)
+      vec2_t tex_coords_2[num_verts];
+    u16 indices[num_polys * 3];
+};
+
+struct eso_footer_t {
+    float unknown1;
+    float unknown2;
+    int unknown3;
+    int unknown4;
+};
+
+struct eso_file_t {
+    asset_header_t asset_header;
+    eso_header_t eso_header;
+    eso_model_t models[eso_header.num_models];
+    // if (eso_header.num_models > 0) {
+      int footer_check;
+      // if (footer_check == 1) {
+        eso_footer_t eso_footer;
+      // }
+    // }
+};

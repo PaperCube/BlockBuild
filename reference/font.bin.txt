@@ -1,0 +1,19 @@
+struct font_rect_t {
+    char x;
+    char y;
+    char width;
+    char height;
+};
+
+struct font_char_t {
+    char num_rects;
+    char width;
+    font_rect_t rects[num_rects];
+};
+
+struct font_bin_t {
+    char space_width;
+    char line_spacing;
+    short num_chars;
+    font_char_t chars[num_chars];
+};

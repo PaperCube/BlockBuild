@@ -1,0 +1,29 @@
+// Miscellaneous
+
+// this is found at the start of all hashed asset files (ean, ema, eso, etx)
+struct asset_header_t {
+    u32 engine_version_a;
+    u32 engine_version_b;
+    char resource_name[64];       // null-padded ASCII
+    char resource_namespace[64];  // null-padded ASCII.
+    
+    // Sub-namespaces are denoted with a period '.' rather than a slash '/'
+};
+
+struct asset_hash_t {
+    u32 hash_name;
+    u32 hash_namespace;
+};
+
+struct keyframe_t {
+    float time;
+    float value;
+    float delta;    // used for interpolation?
+};
+
+struct keyframe_block_t {
+    float zero1;    // always zero?
+    float default_value;
+    int num_keyframes;
+    keyframe_t keyframes[num_keyframes];
+};

@@ -1,0 +1,20 @@
+// 3D Animation
+
+struct ean_file_t {
+    asset_header_t asset_header;
+    float unknown1; // mostly 0, occasionally others but very rare.
+    float duration; // duration of the animation in frames
+    int zero1; // always zero?
+    int zero2; // always zero?
+    asset_hash_t asset_child;   // } these are referencing sibling animations
+    asset_hash_t asset_sibling; // } left-child right-sibling binary tree
+    keyframe_block_t block_tx;  // translation, X axis
+    keyframe_block_t block_ty;  // translation, Y axis
+    keyframe_block_t block_tz;  // translation, Z axis
+    keyframe_block_t block_rx;  // rotation, X axis
+    keyframe_block_t block_ry;  // rotation, Y axis
+    keyframe_block_t block_rz;  // rotation, Z axis
+    keyframe_block_t block_sx;  // scaling, X axis
+    keyframe_block_t block_sy;  // scaling, Y axis
+    keyframe_block_t block_sz;  // scaling, Z axis
+};
